@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>My Activity</h1>
+
+<table border="1" cellpadding="6" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Timestamp</th>
+      <th>Action</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for action in actions %}
+    <tr>
+      <td>{{ action.timestamp }}</td>
+      <td>{{ action.action_type }}</td>
+      <td>{{ action.details or '' }}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="3">No activity yet.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
