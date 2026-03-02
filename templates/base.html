@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-t-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if title %}{{ title }} - MoJ{% else %}MoJ{% endif %}</title>
+    <style>
+      body { font-family: sans-serif; margin: 2em; }
+      nav { background: #f0f0f0; padding: 1em; }
+      nav a { margin-right: 1em; }
+      .flash { background: #cee5F5; padding: 1em; margin: 1em 0; }
+    </style>
+  </head>
+  <body>
+    {% include '_navigation.html' %}
+    <nav>
+      {% if current_user.is_authenticated %}
+        <a href="{{ url_for('my_activity') }}">My Activity</a>
+      {% endif %}
+    </nav>
+    <hr>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class="flash">
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+
+  </body>
+</html>
