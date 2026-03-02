@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>User Profile: {{ user.username }}</h1>
+    {% if current_user.role == 'admin' %}
+        <p><a href="{{ url_for('admin_edit_user', user_id=user.id) }}">Edit User</a></p>
+    {% endif %}
+    <p>Email: {{ user.email }}</p>
+    <p>Role: {{ user.role }}</p>
+
+    <hr>
+
+    <h2>Jokes by {{ user.username }}:</h2>
+
+    {% for joke in jokes %}
+        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+            <p>
+                <strong>{{ joke.author.username }}</strong> 
+                <span style="color: #888;">(on {{ joke.timestamp.strftime('%Y-%m-%d') }})</span>
+            </p>
+            <p>{{ joke.body }}</p>
+            {% if joke.author == current_user %}
+                    <p><a href="{{ url_for('edit_joke', joke_id=joke.id) }}">Edit Joke</a></p>
+            {% elif current_user.role == 'admin' %}
+                    <p><a href="{{ url_for('admin_edit_joke', joke_id=joke.id) }}">Edit Joke</a></p>
+            {% endif %}
+            {% if joke.author == current_user %}
+                <form action="{{ url_for('delete_joke', joke_id=joke.id) }}" method="POST" style="display:inline">
+                    <input type="submit" value="Delete This Joke" onclick="return confirm('Are you sure?');">
+                </form>
+            {% endif %}
+            </div>
+    {% else %}
+        <p>{{ user.username }} has not submitted any jokes yet.</p>
+    {% endfor %}
+
+{% endblock %}
