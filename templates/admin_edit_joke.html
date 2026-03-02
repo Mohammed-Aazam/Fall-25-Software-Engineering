@@ -1,0 +1,31 @@
+def admin_edit_joke(joke_id):
+ 
+    joke = Joke.query.get_or_404(joke_id)
+    form = AdminJokeForm() # <-- Use the new admin form
+    delete_form = AdminDeleteJokeForm()
+ 
+    if form.validate_on_submit():
+        # 1. Perform the action
+        joke.body = form.body.data
+ 
+        # 2. "CONNECT THE WIRE"
+        new_action = UserAction(
+            user=current_user,
+            action_type=UserAction.ADMIN_EDIT_JOKE, # <-- Use the constant!
+            target_type="Joke",
+            target_id=joke.id,
+            details=form.justification.data # <-- Save the justification!
+        )
+        db.session.add(new_action)
+ 
+        # 3. Commit both
+        db.session.commit()
+ 
+        flash('Admin edit successful. Action logged.')
+        return redirect(url_for('admin_panel'))
+ 
+    elif request.method == 'GET':
+        form.body.data = joke.body
+ 
+    return render_template('admin_edit_joke.html',
+                            title='Admin Edit Joke', form=form, delete_form=delete_form, joke=joke)
