@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Submit a New Joke</h1>
+     {{ form.hidden_tag() }}
+            {{ form.body.label }}<br>
+            {{ form.body(rows=4, cols=50) }}
+            {% for error in form.body.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        {% block admin_content %}{% endblock %}
+        <p>{{ form.submit() }}</p>
+{% endblock %}
