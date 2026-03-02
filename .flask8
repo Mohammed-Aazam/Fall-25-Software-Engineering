@@ -1,0 +1,16 @@
+[flake8]
+# F401: 'module' imported but unused
+# E722: do not use bare 'except'
+# W292: no newline at end of file
+ignore = F401, E722, W292
+
+# Set max line length to a more modern 100
+max-line-length = 100
+
+# Exclude folders we don't control
+exclude =
+    .git,
+    __pycache__,
+    moj/__pycache__,
+    venv,
+    migrations
