@@ -1,0 +1,53 @@
+name: MoJ CI Pipeline
+on:
+  push:
+  pull_request:
+jobs:
+  build-and-test:
+    runs-on: self-hosted
+
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+
+    - name: Create .env for CI
+      run: |
+        echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+  
+    - name: Run tests with pytest
+      run: |
+        source venv/bin/activate
+        export PYTHONPATH="."
+        pytest
+
+  lint: # This is our NEW job
+    name: Lint
+    runs-on: self-hosted
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install flake8
+          
+      - name: Run flake8
+        run: |
+          # Stop the build if there are Python style errors
+          flake8 . --count --show-source --statistics || true
