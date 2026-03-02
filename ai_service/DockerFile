@@ -1,0 +1,19 @@
+# Use a minimal Python image for a small, fast container
+FROM python:3.11-slim
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the requirements file and install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the application code
+COPY ai_rater.py .
+
+# The Flask app is configured to run on port 5001 internally
+EXPOSE 5002
+
+# Command to run the application
+# Use the correct internal port
+CMD ["python", "ai_rater.py"]
