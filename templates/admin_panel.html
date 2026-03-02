@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Admin Panel</h1>
+    <p>Welcome, {{ current_user.username }}. You have admin privileges.</p>
+    <hr>
+    <h2>All Users ({{ users|length }})</h2>
+    <ul>
+        {% for user in users %}
+            <li>{{ user.username }} (Role: {{ user.role }})</li>
+        {% endfor %}
+    </ul>
+    <h2>All Jokes ({{ jokes|length }})</h2>
+    <ul>
+        {% for joke in jokes %}
+            <li>"{{ joke.body }}" - <i>by {{ joke.author.username }}</i></li>
+        {% endfor %}
+    </ul>
+
+    <h2>Admin Audit Log ({{ actions|length if actions is defined else 0 }})</h2>
+    <ul>
+        {% if actions %}
+            {% for a in actions %}
+                <li>{{ a.timestamp }} - {{ a.action_type }} - {{ a.details }}</li>
+            {% endfor %}
+        {% else %}
+            <li>No audit actions yet.</li>
+        {% endif %}
+    </ul>
+{% endblock %}
