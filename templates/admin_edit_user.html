@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Admin: Edit User {{ user.username }}</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p style="background: #fff0f0; padding: 1em;">
+            <b>{{ form.role.label }}</b><br>
+            {{ form.role() }}
+            {% for error in form.role.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            <br>
+            <b>{{ form.justification.label }}</b><br>
+            {{ form.justification() }}
+            {% for error in form.justification.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
