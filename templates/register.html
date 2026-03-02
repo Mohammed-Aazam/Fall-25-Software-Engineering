@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Register</h1>
+    <form action="" method="post" novalidate>
+    <!-- form is a variable defined in routes.py:register() and passed when rendering -->
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.username.label }}<br>
+        {{ form.username(size=32) }}
+    </p>
+    <p>
+        {{ form.email.label }}<br>
+        {{ form.email(size=64) }}
+    </p>
+    <p>
+        {{ form.password.label }}<br>
+        {{ form.password(size=32) }}
+    </p>
+    <p>
+        {{ form.password2.label }}<br>
+        {{ form.password2(size=32) }}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+    
+    <p>Already have an account? <a href="{{ url_for('login') }}">Click to Login!</a></p>
+{% endblock %}
