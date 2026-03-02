@@ -1,0 +1,27 @@
+This is the "CRUD" kit for ICE 10.
+
+This kit is a full "snapshot" of the project. It contains the
+complete, correct solution to ICE 9 (login/register forms)
+PLUS all the new code from Lecture 6 (submit joke form,
+index page feed).
+
+Your task in ICE 10 is to build the Profile Page *on top* of
+this new baseline.
+
+FILE MANIFEST:
+================
+
+moj/forms_append.py:
+    - NEW: Adds the 'JokeForm' class from Lecture 6.
+    - APPEND: Append contents to moj/forms.py
+
+moj/routes_append.py:
+    - NEW: Adds the 'submit_joke' route from Lecture 6.
+    - MODIFIED: The 'index' route now queries for all jokes.
+    - APPEND: Append contents to moj/routes.py
+
+templates/index.html:
+    - MODIFIED: Adds a "Submit Joke" link and a 'for' loop to display jokes.
+
+templates/submit_joke.html:
+    - NEW: The template for the 'submit_joke' route from Lecture 6.
